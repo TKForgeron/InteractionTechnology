@@ -1,0 +1,8 @@
+{
+  "execPath": "/home/noah/.platformio/packages/toolchain-atmelavr/bin/avr-g++",
+  "gccDefaultCFlags": "-fsyntax-only -std=gnu11 -fno-fat-lto-objects -Os -Wall -ffunction-sections -fdata-sections -flto -mmcu=atmega328p -DPLATFORMIO=50100 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -D__AVR_ATmega328P__",
+  "gccDefaultCppFlags": "-fsyntax-only -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -Os -Wall -ffunction-sections -fdata-sections -flto -mmcu=atmega328p -DPLATFORMIO=50100 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -D__AVR_ATmega328P__",
+  "gccErrorLimit": 15,
+  "gccIncludePaths": "/home/noah/Development/TIM/Uni/IT/Practicals/sourceCode/Stickuino/include,/home/noah/Development/TIM/Uni/IT/Practicals/sourceCode/Stickuino/src,/home/noah/.platformio/packages/framework-arduino-avr/cores/arduino,/home/noah/.platformio/packages/framework-arduino-avr/variants/standard,/home/noah/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src,/home/noah/.platformio/packages/framework-arduino-avr/libraries/HID/src,/home/noah/.platformio/packages/framework-arduino-avr/libraries/SPI/src,/home/noah/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src,/home/noah/.platformio/packages/framework-arduino-avr/libraries/Wire/src,/home/noah/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/5.4.0/include,/home/noah/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/5.4.0/include-fixed,/home/noah/.platformio/packages/toolchain-atmelavr/avr/include,/home/noah/.platformio/packages/tool-unity",
+  "gccSuppressWarnings": false
+}
