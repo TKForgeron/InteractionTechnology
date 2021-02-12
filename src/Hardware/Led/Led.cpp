@@ -2,6 +2,7 @@
 #include "Led.h"
 
 Led::Led(int pinNumber) {
+  //constructor van de class, i.e. instantieren van je class
     this->pinNumber = pinNumber;
     pinMode(pinNumber, OUTPUT);
 }
