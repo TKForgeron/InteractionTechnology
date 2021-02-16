@@ -20,10 +20,10 @@ void Led::off() {
 };
 
 void Led::toggle(){
+    // Set voltage to opposite of what it is now for attribute pinNumber
     int pin = this->pinNumber;
     bool ledState = digitalRead(pin);
     digitalWrite(pin, !ledState);
-    Serial.println(ledState);
 }
 
 void Led::flash(int amount, int flashSpeed){

@@ -37,7 +37,7 @@
 .pio
 *.ini
 
-# Other 
+# Other
 *.json
 *.clang_complete
 .SafeString
