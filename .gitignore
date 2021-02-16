@@ -30,5 +30,13 @@
 *.exe
 *.out
 *.app
-
+.vscode
 *.vscode
+
+# PlatformIO specific stuff
+.pio
+.platformio.ini
+
+# Other 
+*.json
+*.clang_complete
