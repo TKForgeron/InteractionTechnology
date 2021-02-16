@@ -40,4 +40,4 @@
 # Other 
 *.json
 *.clang_complete
-.SafeString/
+.SafeString
