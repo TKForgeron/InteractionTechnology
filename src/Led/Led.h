@@ -9,12 +9,13 @@ private:
     // Primitive type therefore no reference
     int pinNumber;
 
-public: 
+public:
     // Constructor
     Led(int pinNumber);
     // Methods
     void off();
     void on(); 
+    void toggle();
     void flash(int amount = 1, int flashSpeed = 250);
 };
 

@@ -4,7 +4,7 @@
 Led::Led(int pinNumber){
     // Set attribute pinNumber to value passed to constructor
     this->pinNumber = pinNumber;
-    // Setup for led use to output
+    // Set up for LED use
     pinMode(pinNumber,OUTPUT);
 
 };
@@ -19,6 +19,13 @@ void Led::off() {
     digitalWrite(this->pinNumber, LOW);
 };
 
+void Led::toggle(){
+    int pin = this->pinNumber;
+    bool ledState = digitalRead(pin);
+    digitalWrite(pin, !ledState);
+    Serial.println(ledState);
+}
+
 void Led::flash(int amount, int flashSpeed){
     
     // Loop and flash
@@ -31,4 +38,3 @@ void Led::flash(int amount, int flashSpeed){
     }
 
 };
-

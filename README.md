@@ -1,2 +1,13 @@
-# InteractionTechnology
-ik gebruik dus atom met platformIO, ik heb geen idee wat ik niet moet pushen/in de .gitignore moet zetten
+# InteractionTechnology - Assignment 1
+
+## Classes to be made
+- MotionSensor
+- LightSensor
+- Pushbutton
+- Magnetic contact sensor
+    - can be done through inheritance of Pushbutton
+    - yet to determine how exaclty: abstract class or not, etc...
+- TemperatureSensor
+- DistanceSensor
+- Lcd
+- Freshener?
