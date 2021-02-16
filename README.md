@@ -2,7 +2,7 @@
 
 ## Classes to be made
 - MotionSensor
-- LightSensor (need reviewing)
+- LightSensor (needs reviewing)
 - Pushbutton
 - Magnetic contact sensor
     - can be done through inheritance of Pushbutton
