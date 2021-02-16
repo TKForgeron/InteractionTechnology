@@ -1,3 +1,7 @@
+/*
+    inspiration taken from library at: https://github.com/PowerBroker2/SafeString
+*/
+
 #include <Arduino.h>
 
 #ifndef INFOB3IT_TIMER_H
