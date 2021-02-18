@@ -3,7 +3,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-// Homemade libraries
+// Homemade ibraries
 #include "Led/Led.h"
 #include "Led/RGBLed.h"
 #include "Timer/Timer.h"
