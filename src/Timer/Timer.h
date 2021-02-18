@@ -1,5 +1,5 @@
 /*
-    inspiration taken from library at: https://github.com/PowerBroker2/SafeString
+    inspiration taken from: https://github.com/PowerBroker2/SafeString
 */
 
 #include <Arduino.h>
