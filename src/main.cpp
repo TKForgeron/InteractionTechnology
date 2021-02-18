@@ -3,36 +3,37 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-// Homemade ibraries
+// Homemade libraries
 #include "Led/Led.h"
 #include "Led/RGBLed.h"
 #include "Timer/Timer.h"
 #include "LightSensor/LightSensor.h"
 
+// Variables
+float temp = 0;
 
+// Constants
+const int motionSensor = 2;
+
+// Objects
 Timer ledTimer;
 Timer tempTimer;
 Led internalLed(13);                        // maak internalLed object van de class "Led" met als argument meegegeven "13"
-Led externalLed(12);                        // constructor is een methode, die tevens een nieuwe instantie van een class construct
-Led greenLed(5);                            // bij het aanmaken van een class
-Led blueLed(6);                             // het is eigenlijk dit: Led blueLed = new Led(1);
-Led redLed(3);
+Led externalLed(7);                         // constructor is een methode, die tevens een nieuwe instantie van een class construct
+Led redLed(3);                              // bij het aanmaken van een class
+Led greenLed(5);                            // het is eigenlijk dit: Led greenLed = new Led(5);
+Led blueLed(6);
 RGBLed rgbLed(&redLed,&greenLed,&blueLed);  // create rgbLed instance that is composed of 3 led instances
 LightSensor lightSensor(0);
 OneWire oneWire(8);                         // create one-wire instance for pin8
-DallasTemperature tempSensor(&oneWire);     // create tempSensor object using the oneWire(8) object/instance
-
-// Variables
-float temp = 0;
-// Constants
-const int motionSensor = 2;
+DallasTemperature tempSensors(&oneWire);     // create tempSensors object using the oneWire(8) object/instance
 
  void setup() {
    Serial.begin(9600);
    pinMode(motionSensor, INPUT);
    ledTimer.start(2500);
    tempTimer.start(1000);
-   tempSensor.begin();
+   tempSensors.begin();
  }
 
  void loop() {
@@ -57,8 +58,8 @@ const int motionSensor = 2;
    
    if (tempTimer.hasExpired()){
      tempTimer.repeat();
-     tempSensor.requestTemperatures();
-     temp = tempSensor.getTempCByIndex(0);
+     tempSensors.requestTemperatures();
+     temp = tempSensors.getTempCByIndex(0);
      Serial.print(F("Current temperature: "));
      Serial.println(temp);
    }
