@@ -1,9 +1,9 @@
-// Imported Libraries
+// Externally imported libraries
 #include <Arduino.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-// Homemade Libraries
+// Homemade libraries
 #include "Led/Led.h"
 #include "Led/RGBLed.h"
 #include "Timer/Timer.h"
