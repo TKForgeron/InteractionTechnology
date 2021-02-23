@@ -2,16 +2,23 @@
 #include "BinarySwitch/BinarySwitch.h"
 
 BinarySwitch::BinarySwitch(int pinNumber) { 
-    pinMode(this->pinNumber,INPUT);
+    // Set attribute pinNumber to value passed to constructor
+    this->pinNumber = pinNumber;
+    // Set up for LightSensor use
+    pinMode(pinNumber,INPUT);
 };
 
 // Methods
 bool BinarySwitch::getState(){
-    return digitalRead(this->pinNumber);
+    return !digitalRead(this->pinNumber);
 };
 
 bool BinarySwitch::hasMillis(){
     return this->millisSet;
+}
+
+void BinarySwitch::stopTimer(){
+    this-> millisSet = false;
 }
 
 void BinarySwitch::setBeginMillis(unsigned long millis) {
@@ -21,4 +28,4 @@ void BinarySwitch::setBeginMillis(unsigned long millis) {
 
 unsigned long BinarySwitch::getPressedTime(unsigned long millis) {
     return millis - this->beginMillis;
-}
+};

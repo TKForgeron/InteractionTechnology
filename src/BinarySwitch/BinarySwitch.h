@@ -17,6 +17,7 @@ public:
     // Methods
     bool getState();
     bool hasMillis();
+    void stopTimer();
     void setBeginMillis(unsigned long millis);
     unsigned long getPressedTime(unsigned long millis);
 };

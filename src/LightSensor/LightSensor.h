@@ -10,12 +10,13 @@ private:
     int pinNumber;
 
 public:
+    int initialValue = 10;
     // Constructor
     LightSensor(int pinNumber);
     // Methods
+    void setInitialValue();
     int getValue();
-    bool activateCondition(int threshold = 500);
-    void consoleWrite(int writeSpeed);
+    bool thresholdReached(int threshold = 250);
 };
 
 #endif //INFOB3IT_LIGHTSENSOR_H

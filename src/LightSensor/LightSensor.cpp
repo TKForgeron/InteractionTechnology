@@ -8,18 +8,21 @@ LightSensor::LightSensor(int pinNumber){
     pinMode(pinNumber,INPUT);
 };
 
+void LightSensor::setInitialValue(){
+    // Get initial light value
+    this->initialValue = analogRead(this->pinNumber);
+}
+
 int LightSensor::getValue(){
-    int value = analogRead(this->pinNumber);
-    return value;
+    return analogRead(this->pinNumber);
 };
 
-bool LightSensor::activateCondition(int threshold){
-    bool x = this->getValue() > threshold;
-    return x;
-};
+// bool LightSensor::thresholdReached(int threshold){
+//     Serial.print("getValue(): ");
+//     Serial.println(this->getValue());
+//     return this->getValue() - this->initialValue > threshold;
+// };
 
-void LightSensor::consoleWrite(int writeSpeed){
-    // int value = this->getValue();
-    // Serial.println(value);
-    Serial.println(this->getValue());
+bool LightSensor::thresholdReached(int threshold){
+    return this->getValue() > threshold;   
 }
