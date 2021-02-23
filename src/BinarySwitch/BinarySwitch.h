@@ -9,12 +9,14 @@ private:
     // Primitive type therefore no reference
     int pinNumber;
     unsigned long beginMillis = 0;
+    bool millisSet = false;
 
 public:
     // constructor
     BinarySwitch(int pinNumber);
     // Methods
     bool getState();
+    bool hasMillis();
     void setBeginMillis(unsigned long millis);
     unsigned long getPressedTime(unsigned long millis);
 };
