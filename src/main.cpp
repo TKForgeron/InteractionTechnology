@@ -27,6 +27,6 @@ void loop() {
     }
   }
   else{
-    Serial.println(pushButton.getPressedTime());
+    Serial.println(pushButton.getPressedTime(millis()));
   }
 }
