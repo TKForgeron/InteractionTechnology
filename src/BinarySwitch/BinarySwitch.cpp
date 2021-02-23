@@ -10,22 +10,55 @@ BinarySwitch::BinarySwitch(int pinNumber) {
 
 // Methods
 bool BinarySwitch::getState(){
-    return !digitalRead(this->pinNumber);
-};
-
-bool BinarySwitch::hasMillis(){
-    return this->millisSet;
+    this->buttonState = !digitalRead(this->pinNumber);
+    return this->buttonState;
 }
 
-void BinarySwitch::stopTimer(){
-    this-> millisSet = false;
+void BinarySwitch::updateState() {
+  // the button has been just pressed
+  if (this->buttonState == HIGH) {
+      this->startPressed = millis();
+      this->idleTime = this->startPressed - this->endPressed;
+
+      if (this->idleTime >= 500 && this->idleTime < 1000) {
+          Serial.println("Button was idle for half a second");
+      }
+
+      if (this->idleTime >= 1000) {
+          Serial.println("Button was idle for one second or more"); 
+      }
+
+  // the button has been just released
+  } else {
+      this->endPressed = millis();
+      this->holdTime = this->endPressed - this->startPressed;
+
+      if (this->holdTime >= 500 && this->holdTime < 1000) {
+          Serial.println("Button was hold for half a second"); 
+      }
+
+      if (this->holdTime >= 1000) {
+          Serial.println("Button was hold for one second or more"); 
+      }
+
+  }
 }
 
-void BinarySwitch::setBeginMillis(unsigned long millis) {
-    this->beginMillis = millis;
-    this->millisSet = true;
-};
+void BinarySwitch::updateCounter() {
+  // the button is still pressed
+  if (this->buttonState == HIGH) {
+      this->holdTime = millis() - this->startPressed;
 
-unsigned long BinarySwitch::getPressedTime(unsigned long millis) {
-    return millis - this->beginMillis;
-};
+      if (this->holdTime >= 1000) {
+          Serial.println("Button is hold for more than a second"); 
+      }
+
+  // the button is still released
+  } else {
+      this->idleTime = millis() - endPressed;
+
+      if (this->idleTime >= 1000) {
+          Serial.println("Button is released for more than a second");  
+      }
+  }
+}

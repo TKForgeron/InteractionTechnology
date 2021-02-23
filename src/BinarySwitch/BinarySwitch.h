@@ -8,18 +8,21 @@ class BinarySwitch {
 private:
     // Primitive type therefore no reference
     int pinNumber;
-    unsigned long beginMillis = 0;
-    bool millisSet = false;
+    int startPressed = 0;    // the moment the button was pressed
+    int endPressed = 0;      // the moment the button was released
+    int holdTime = 0;        // how long the button was hold
+    int idleTime = 0;        // how long the button was idle
 
 public:
     // constructor
     BinarySwitch(int pinNumber);
     // Methods
     bool getState();
-    bool hasMillis();
-    void stopTimer();
-    void setBeginMillis(unsigned long millis);
-    unsigned long getPressedTime(unsigned long millis);
+    void updateState();
+    void updateCounter();
+    // Properties
+    int buttonState = 0;     // current state of the button
+    int lastButtonState = 0; // previous state of the button
 };
 
 #endif //INFOB3IT_BINARYSWITCH_H

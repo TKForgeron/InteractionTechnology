@@ -6,6 +6,7 @@
 
 Timer timer;
 Led internalLed(13);
+Led externalLed(7);
 BinarySwitch pushButton(12);
 LightSensor lightSensor(0);
  
@@ -18,24 +19,19 @@ void setup() {
 }
  
 void loop() {
-  // if(lightSensor.thresholdReached()){
-  //   internalLed.toggle();
-  //   Serial.println("threshold reached");
-  // }else{
-  //   Serial.println("threshold not reached");
-  // }
-  // Serial.print("initialValue: ");
-  // Serial.println(lightSensor.initialValue);
-  // delay(500);
+  pushButton.buttonState = pushButton.getState();
 
-  if (pushButton.getState()){
-    if(!pushButton.hasMillis()){
-      pushButton.setBeginMillis(millis());
-    }
+  // Versie 1
+  // if (pushButton.buttonState != pushButton.lastButtonState) { // button state changed
+  //    pushButton.updateState();
+  // }
+
+  // Versie 2
+  if (pushButton.buttonState != pushButton.lastButtonState) { 
+     pushButton.updateState(); // button state changed. It runs only once.
+  } else {
+     pushButton.updateCounter(); // button state not changed. It runs in a loop.
   }
-  else{
-    Serial.println(pushButton.getPressedTime(millis()));
-    pushButton.stopTimer();
-  }
-  delay(1000);
+
+  pushButton.lastButtonState = pushButton.buttonState;        // save state for next loop
 }
