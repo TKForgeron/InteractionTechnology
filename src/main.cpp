@@ -31,12 +31,11 @@ void loop() {
   if (pushButton.getState()){
     if(!pushButton.hasMillis()){
       pushButton.setBeginMillis(millis());
-      Serial.println("millis on");
     }
   }
   else{
     Serial.println(pushButton.getPressedTime(millis()));
-    Serial.println("test");
+    pushButton.stopTimer();
   }
   delay(1000);
 }
