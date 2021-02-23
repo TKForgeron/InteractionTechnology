@@ -1,10 +1,10 @@
 # InteractionTechnology - Assignment 1
 
 ## Classes to be made
-- BinarySwitch (parent)
+- BinarySwitch (abstract parent)
     - Pushbutton
     - Magnetic contact sensor
-- BinaryActuator (parent)
+- BinaryActuator (abstract parent)
     - ~~Led~~
     - ~~RGBLed (composed of 3x Led)~~
     - Mosfet (as switch)
