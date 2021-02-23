@@ -9,7 +9,7 @@ long duration;
 int distance;
 Timer timer;
 Led internalLed(13);
-BinarySwitch pushButton(8);
+BinarySwitch pushButton(12);
  
 void setup() {
   //Serial Port begin
@@ -21,21 +21,12 @@ void setup() {
 }
  
 void loop() {
-  if (timer.hasExpired()){
-    timer.repeat();
-    digitalWrite(trigPin, LOW);
-    delayMicroseconds(5);
-    digitalWrite(trigPin, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigPin, LOW);
-  
-    duration = pulseIn(echoPin, HIGH);
-    distance = duration / 2 * 0.0343;
-    
-    Serial.print(F("Distance: "));
-    Serial.println(distance);
-  }else{
-    internalLed.toggle();
-  }  
-  
+  if (pushButton.getState()){
+    if(!pushButton.hasMillis()){
+      pushButton.setBeginMillis(millis());
+    }
+  }
+  else{
+    Serial.println(pushButton.getPressedTime());
+  }
 }
