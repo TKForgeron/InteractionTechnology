@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include "../BinaryActuator.h"
 
-
 #ifndef INFOB3IT_LED_H
 #define INFOB3IT_LED_H
 

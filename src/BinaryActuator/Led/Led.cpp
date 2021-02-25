@@ -12,7 +12,6 @@ void Led::flash(int amount, int flashSpeed){
         delay(flashSpeed);
         this->off();
         delay(flashSpeed);
-
     }
 
 };
