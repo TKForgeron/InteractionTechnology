@@ -40,7 +40,6 @@ void RGBLed::ambulance(){
         this->yellow();
         delay(500);
         this->white();
-
     }
 
 };

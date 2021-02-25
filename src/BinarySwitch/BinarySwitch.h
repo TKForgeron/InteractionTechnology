@@ -19,10 +19,10 @@ public:
     void updateState();
     void updateCounter();
     // Properties
-    unsigned long  holdTime = 0;           // how long the button was hold
-    unsigned long idleTime = 0; // how long the button was idle
-    int buttonState = 0;        // current state of the button
-    int lastButtonState = 0;    // previous state of the button
+    unsigned long  holdTime = 0;    // how long the button was hold
+    unsigned long idleTime = 0;     // how long the button was idle
+    int buttonState = 0;            // current state of the button
+    int lastButtonState = 0;        // previous state of the button
 };
 
 #endif //INFOB3IT_BINARYSWITCH_H

@@ -2,10 +2,8 @@
 #include "BinarySwitch/BinarySwitch.h"
 
 BinarySwitch::BinarySwitch(int pinNumber) { 
-    // Set attribute pinNumber to value passed to constructor
-    this->pinNumber = pinNumber;
-    // Set up for BinarySwitch use
-    pinMode(pinNumber,INPUT);
+    this->pinNumber = pinNumber;    // Set attribute pinNumber to value passed to constructor
+    pinMode(pinNumber,INPUT);       // Set up for BinarySwitch use
 };
 
 // Methods
@@ -15,11 +13,10 @@ bool BinarySwitch::getState(){
 }
 
 void BinarySwitch::updateState() {
-  // the button has been just pressed
-  if (this->buttonState == HIGH) {
+  if (this->buttonState == HIGH) {  // the button has been just pressed
       this->startPressed = millis();
       this->idleTime = this->startPressed - this->endPressed;
-  } else {  // the button has been just released
+  } else {                          // the button has been just released
       this->endPressed = millis();
       this->holdTime = this->endPressed - this->startPressed;
   }
@@ -28,10 +25,9 @@ void BinarySwitch::updateState() {
 /* Records time button is idle/on hold WHILE button is still pressed/released
    usage: to do stuff WHILE button is still being pressed (e.g. showing 'live' timePressed on LCD)*/
 void BinarySwitch::updateCounter() {
-  // the button is still pressed
-  if (this->buttonState == HIGH) {
+  if (this->buttonState == HIGH) {  // the button is still pressed
       this->holdTime = millis() - this->startPressed;
-  } else {  // the button is still released
+  } else {                          // the button is still released
       this->idleTime = millis() - endPressed;
   }
 }
