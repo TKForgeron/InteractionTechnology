@@ -35,6 +35,7 @@
 
 # PlatformIO specific stuff
 .pio
+.test
 *.ini
 
 # Other

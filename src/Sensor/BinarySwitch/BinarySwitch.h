@@ -1,13 +1,13 @@
 #include <Arduino.h>
+#include "../Sensor.h"
 
 #ifndef INFOB3IT_BINARYSWITCH_H
 #define INFOB3IT_BINARYSWITCH_H
 
-class BinarySwitch { 
+class BinarySwitch : public Sensor { 
 
 private:
     // Primitive type therefore no reference
-    int pinNumber;
     unsigned long  startPressed = 0;    // the moment the button was pressed
     unsigned long  endPressed = 0;      // the moment the button was released
 

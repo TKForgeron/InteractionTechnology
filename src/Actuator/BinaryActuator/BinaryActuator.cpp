@@ -1,9 +1,7 @@
 #include <Arduino.h>
 #include "BinaryActuator.h"
 
-BinaryActuator::BinaryActuator(int pinNumber){
-    this->pinNumber = pinNumber;    // Set attribute pinNumber to value passed to constructor
-    pinMode(pinNumber,OUTPUT);      // Set up for BinaryActuator use
+BinaryActuator::BinaryActuator(int pinNumber) : Actuator(pinNumber) {
 };
 
 void BinaryActuator::on() {

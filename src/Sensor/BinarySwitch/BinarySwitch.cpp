@@ -1,9 +1,7 @@
 #include <Arduino.h>
-#include "BinarySwitch/BinarySwitch.h"
+#include "BinarySwitch.h"
 
-BinarySwitch::BinarySwitch(int pinNumber) { 
-    this->pinNumber = pinNumber;    // Set attribute pinNumber to value passed to constructor
-    pinMode(pinNumber,INPUT);       // Set up for BinarySwitch use
+BinarySwitch::BinarySwitch(int pinNumber) : Sensor(pinNumber) { 
 };
 
 // Methods

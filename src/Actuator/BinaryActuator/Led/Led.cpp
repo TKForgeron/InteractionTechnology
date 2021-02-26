@@ -2,7 +2,7 @@
 #include "../BinaryActuator.h"
 #include "Led.h"
 
-Led::Led(int pinNumber) : BinaryActuator(pinNumber){
+Led::Led(int pinNumber) : BinaryActuator(pinNumber) {
 };
 
 void Led::flash(int amount, int flashSpeed){    

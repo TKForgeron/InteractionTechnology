@@ -1,13 +1,10 @@
 #include <Arduino.h>
+#include "../Sensor.h"
 
 #ifndef INFOB3IT_LIGHTSENSOR_H
 #define INFOB3IT_LIGHTSENSOR_H
 
-class LightSensor { 
-
-private:
-    // Primitive type therefore no reference
-    int pinNumber;
+class LightSensor : public Sensor { 
 
 public:
     int initialValue = 10;

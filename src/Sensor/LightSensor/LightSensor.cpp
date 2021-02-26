@@ -1,11 +1,8 @@
 #include <Arduino.h>
 #include "LightSensor.h"
 
-LightSensor::LightSensor(int pinNumber){
-    // Set attribute pinNumber to value passed to constructor
-    this->pinNumber = pinNumber;
-    // Set up for LightSensor use
-    pinMode(pinNumber,INPUT);
+
+LightSensor::LightSensor(int pinNumber) : Sensor(pinNumber) {
 };
 
 void LightSensor::setInitialValue(){

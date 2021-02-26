@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include "Timer/Timer.h"
-#include "BinaryActuator/Led/Led.h"
-#include "BinaryActuator/Mosfet/Mosfet.h"
-#include "BinarySwitch/BinarySwitch.h"
-#include "LightSensor/LightSensor.h"
+#include "Actuator/BinaryActuator/Led/Led.h"
+#include "Actuator/BinaryActuator/Mosfet/Mosfet.h"
+#include "Sensor/BinarySwitch/BinarySwitch.h"
+#include "Sensor/LightSensor/LightSensor.h"
 
 Timer timer;
 Led internalLed(13);
@@ -11,7 +11,6 @@ Led externalLed(7);
 Mosfet freshenerSwitch(3);
 BinarySwitch pushButton(12);
 LightSensor lightSensor(0);
- 
 
 void setup() {
   //Serial Port begin

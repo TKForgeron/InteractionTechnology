@@ -1,13 +1,10 @@
 #include <Arduino.h>
+#include "../Actuator.h"
 
 #ifndef INFOB3IT_BINARYACTUATOR_H
 #define INFOB3IT_BINARYACTUATOR_H
 
-class BinaryActuator { 
-
-protected:
-    // Primitive type therefore no reference
-    int pinNumber;
+class BinaryActuator : public Actuator { 
 
 public:
     // Constructor
