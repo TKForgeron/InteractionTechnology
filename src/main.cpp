@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <LiquidCrystal.h>
 #include "Timer/Timer.h"
 #include "Actuator/BinaryActuator/Led/Led.h"
 #include "Actuator/BinaryActuator/Mosfet/Mosfet.h"
@@ -6,42 +7,58 @@
 #include "Sensor/LightSensor/LightSensor.h"
 
 Timer timer;
-Led internalLed(13);
-Led externalLed(7);
-Mosfet freshenerSwitch(3);
-BinarySwitch pushButton(12);
-LightSensor lightSensor(0);
+BinarySwitch pushButton(7);
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 void setup() {
   //Serial Port begin
   Serial.begin(9600);
   //Define inputs and outputs
   timer.start(500);
+  lcd.begin(16,2);
+
 }
  
 void loop() {
-  pushButton.buttonState = pushButton.getState();
 
-  // Versie 1 - als je dingen wil doen als reactie op (de tijd van) de ingedrukte knop
-  if (pushButton.buttonState != pushButton.lastButtonState) { // button state changed
-     pushButton.updateState();
+  // set the cursor to (0,0):
+
+  lcd.setCursor(0, 0);
+
+  // print from 0 to 9:
+
+  for (int thisChar = 0; thisChar < 10; thisChar++) {
+
+    lcd.print(thisChar);
+
+    delay(500);
+
   }
 
-  // Versie 2 - als je dingen wil doen tijdens indrukken van knop
-  // if (pushButton.buttonState != pushButton.lastButtonState) { 
-  //    pushButton.updateState(); // button state changed. It runs only once.
-  // } else {
-  //    pushButton.updateCounter(); // button state not changed. It runs in a loop.
-  // }
+  // set the cursor to (16,1):
 
-  if (timer.hasExpired()){
-    timer.repeat();
-    Serial.print("idle: ");
-    Serial.println(pushButton.idleTime);
-    Serial.print("hold: ");
-    Serial.println(pushButton.holdTime);
-    Serial.println(" ");
+  lcd.setCursor(16, 1);
+
+  // set the display to automatically scroll:
+
+  lcd.autoscroll();
+
+  // print from 0 to 9:
+
+  for (int thisChar = 0; thisChar < 10; thisChar++) {
+
+    lcd.print(thisChar);
+
+    delay(500);
+
   }
 
-  pushButton.lastButtonState = pushButton.buttonState;  // save state for next loop
+  // turn off automatic scrolling
+
+  lcd.noAutoscroll();
+
+  // clear screen for the next loop:
+
+  lcd.clear();
 }
