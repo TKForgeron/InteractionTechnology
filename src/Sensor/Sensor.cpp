@@ -3,5 +3,5 @@
 
 Sensor::Sensor(int pinNumber){
     this->pinNumber = pinNumber;    // Set attribute pinNumber to value passed to constructor
-    pinMode(pinNumber,INPUT);      // Set up for Sensor use
+    pinMode(pinNumber,INPUT);       // Set up for Sensor use
 };

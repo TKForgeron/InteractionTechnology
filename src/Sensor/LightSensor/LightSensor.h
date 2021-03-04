@@ -13,7 +13,7 @@ public:
     // Methods
     void setInitialValue();
     int getValue();
-    bool thresholdReached(int threshold = 250);
+    bool thresholdReached(int threshold = 500);
 };
 
 #endif //INFOB3IT_LIGHTSENSOR_H

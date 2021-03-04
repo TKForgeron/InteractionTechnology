@@ -14,3 +14,14 @@
 - LightSensor (needs reviewing)
 - ~~TemperatureSensor (imported)~~ 
 - DistanceSensor
+
+### Tim
+- Hardware technical perspective
+- Reflection
+
+
+### Kouros
+- Software Technical perspective
+- User needs gathering
+- Functional perspective
+- State Diagram
