@@ -1,25 +1,28 @@
 #include <Arduino.h>
+#include "../BinaryActuator.h"
+
 
 #ifndef INFOB3IT_FRESHENER_H
 #define INFOB3IT_FRESHENER_H
 
 enum State{notInUse, inUse, triggered};
 
-class Freshener { 
+class Freshener : public BinaryActuator { 
 
 private:
     State state;
 
 public:
     // Constructor
-    Freshener();
+    Freshener(int pinNumber);
     // Methods
     State getState();
+    void spray(int amount);
     void setState(State s);
     void reset();
     void increaseTimesPulled(int distanceThreshold, int distance);
     // Attributes
-    int timesPulled;
+    unsigned long timesPulled;
     unsigned long timeInUse;
 };
 

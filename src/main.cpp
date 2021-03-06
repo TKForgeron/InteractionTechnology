@@ -1,51 +1,50 @@
 #include <Arduino.h>
 #include <NewPing.h>
 #include <LiquidCrystal.h>
+#include <DallasTemperature.h>
 #include "Timer/Timer.h"
 #include "Actuator/BinaryActuator/Led/Led.h"
-#include "Actuator/BinaryActuator/Mosfet/Mosfet.h"
+#include "Actuator/BinaryActuator/Freshener/Freshener.h"
 #include "Sensor/BinarySwitch/BinarySwitch.h"
 #include "Sensor/LightSensor/LightSensor.h"
 #include "Sensor/MotionSensor/MotionSensor.h"
-#include "Freshener/Freshener.h"
 #include "Stopwatch/Stopwatch.h"
 
-int i=0;
+
+// Timers & Stopwatches
+
 Timer timer;
 Timer triggerDelay;
+Timer toiletUseDisplayTimer;
 Stopwatch stopwatch;
-BinarySwitch pushButton(7);
-MotionSensor motionSensor(6);
+
+// LCD
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
-int trigPin = 9;    // Trigger
-int echoPin = 8;    // Echo
-unsigned long cm;   // Distance
-NewPing distanceSensor(trigPin,echoPin,500);
-Freshener freshener;
-LightSensor lightSensor(0);
-State state;
-// MotionSensor motionSensor(10);
 
-unsigned const int timeInUseThreshold = 60;
-unsigned const int timesPulledThreshold = 5;
+// Actuators
+Freshener freshener(10);
+
+// Sensors
+MotionSensor motionSensor(6);
+LightSensor lightSensor(0);
+DallasTemperature temperatureSensor;
+
+// Classification Properties
+State state;
+const unsigned long timeInUseThreshold = 10;
+const unsigned long timesPulledThreshold = 5;
 
 void setup() {
-  //Serial Port begin
   Serial.begin(9600);
-  //Define inputs and outputs
-  timer.start(100);
   lcd.begin(16,2);
 
 }
  
 void loop() {
   state = freshener.getState();
-  if (timer.hasExpired()) {
-    timer.repeat();
-    lcd.setCursor(0,1);
-    lcd.print(state);
-  }
+
+  temperatureSensor.getTempC();
   
   if (state == notInUse) {
     lcd.setCursor(0,0);
@@ -58,13 +57,8 @@ void loop() {
 
   } else if (state == inUse) {
 
-    if (motionSensor.getState() == HIGH) {
-      i++;
-      freshener.timesPulled += round(i/500);
-    }
-    Serial.println(freshener.timesPulled);
+    freshener.timesPulled = motionSensor.motionCounter();
     
-    // Serial.println("test");
     stopwatch.start();
 
     lcd.setCursor(0,0);
@@ -72,6 +66,7 @@ void loop() {
     
     if (!lightSensor.thresholdReached()) {  // lightIsOff
         Serial.println("setting state to triggered");
+        toiletUseDisplayTimer.start(5000);
         freshener.setState(triggered);
     }
     
@@ -80,27 +75,25 @@ void loop() {
     stopwatch.stop();
     freshener.timeInUse = stopwatch.getTime();
     stopwatch.reset();
-
-    Serial.println(freshener.timeInUse);
-    
+  
+    lcd.setCursor(0,0);
 
     if (freshener.timesPulled >= timesPulledThreshold && freshener.timeInUse >= timeInUseThreshold) {  // number 2
-      // freshener.spray(2);
-      lcd.setCursor(0,0);
-      lcd.print(F("Number two detected"));
+      lcd.print(F("NUMBER TWO VISIT"));
+      freshener.spray(2);
+    } else if (freshener.timeInUse < timeInUseThreshold) {  // number 1      
+      freshener.spray(1);
     } else if (freshener.timeInUse >= timeInUseThreshold && freshener.timesPulled >= timesPulledThreshold) {  // cleaning
-      lcd.setCursor(0,0);
-      lcd.print(F("you're cleaning"));
-    } else if (freshener.timeInUse < timeInUseThreshold) {  // number 1
-      // freshener.spray(1);
-      lcd.setCursor(0,0);
-      lcd.print(F("Number one detected"));
+      lcd.print(F("CLEANING"));
     } else {  // cannot recognise
-      lcd.setCursor(0,0);
-      lcd.print(F("you're a mysterious toilet visitor"));
+      lcd.print(F("MYSTERIOUS VISIT"));
     }
 
-    delay(5000);
-    freshener.reset();
+    if (toiletUseDisplayTimer.hasExpired()) {
+      freshener.reset();
+      motionSensor.reset();
+      toiletUseDisplayTimer.stop();
+    }
   }
+  
 }

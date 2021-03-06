@@ -1,18 +1,26 @@
 #include <Arduino.h>
 #include "../Sensor.h"
+#include "../../Timer/Timer.h"
 
 #ifndef INFOB3IT_MOTIONSENSOR_H
 #define INFOB3IT_MOTIONSENSOR_H
 
 class MotionSensor : public Sensor {
     
+private:
+    int motionCount;
+    int state;
+    int currentState;
+    int previousState;
+
 public:
     // Constructor
     MotionSensor(int pinNumber);
     // Methods
-    bool getState();
+    int motionCounter();
+    void reset();
     // Attributes
-    bool state;
+
 };
 
 #endif //INFOB3IT_MOTIONSENSOR_H

@@ -25,8 +25,8 @@ void Stopwatch::stop(){
     }
 }
 
-unsigned int Stopwatch::getTime(){
-    unsigned int elapsedTime;
+unsigned long Stopwatch::getTime(){
+    unsigned long elapsedTime;
     if(this->isCounting){
         elapsedTime = millis() - this->startTime;
     } else {

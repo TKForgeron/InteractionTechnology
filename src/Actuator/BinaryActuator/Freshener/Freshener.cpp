@@ -1,7 +1,9 @@
 #include <Arduino.h>
 #include "Freshener.h"
 
-Freshener::Freshener(){
+Freshener::Freshener(int pinNumber) : BinaryActuator(pinNumber) {
+    // this->pinNumber = pinNumber;
+    // digitalWrite(pinNumber, OUTPUT);
     this->timeInUse = 0;
     this->timesPulled = 0;
     this->state = notInUse;
@@ -9,6 +11,16 @@ Freshener::Freshener(){
 
 State Freshener::getState() {
     return this->state;
+}
+
+void Freshener::spray(int amount) {
+    
+    for (int i = 0; i < amount; i++) {
+        this->on();
+        delay(25000);
+        this->off();
+    }
+    
 }
 
 void Freshener::setState(State s) {

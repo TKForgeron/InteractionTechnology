@@ -7,15 +7,15 @@ class Stopwatch{
 
 private:
 
-    unsigned int startTime;     
-    unsigned int stopTime;
+    unsigned long startTime;     
+    unsigned long stopTime;
     bool isCounting;            
 
 public:
     // Constructor
     Stopwatch();
     // Methods
-    unsigned int getTime();
+    unsigned long getTime();
     void start();
     void stop();
     void reset(); 
