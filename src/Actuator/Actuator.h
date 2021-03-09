@@ -6,7 +6,6 @@
 class Actuator { 
 
 protected:
-    // Primitive type therefore no reference
     int pinNumber;
 
 public:

@@ -22,3 +22,4 @@ public:
 };
 
 #endif //INFOB3IT_STOPWATCH_H
+

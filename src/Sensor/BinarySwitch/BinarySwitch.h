@@ -10,7 +10,6 @@ private:
     // Primitive type therefore no reference
     unsigned long  startPressed = 0;    // the moment the button was pressed
     unsigned long  endPressed = 0;      // the moment the button was released
-
 public:
     // constructor
     BinarySwitch(int pinNumber);
@@ -23,6 +22,7 @@ public:
     unsigned long idleTime = 0;     // how long the button was idle
     int buttonState = 0;            // current state of the button
     int lastButtonState = 0;        // previous state of the button
+    unsigned long lastPressed = 0;
 };
 
 #endif //INFOB3IT_BINARYSWITCH_H

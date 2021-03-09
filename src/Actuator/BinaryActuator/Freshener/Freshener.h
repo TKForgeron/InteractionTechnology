@@ -5,7 +5,8 @@
 #ifndef INFOB3IT_FRESHENER_H
 #define INFOB3IT_FRESHENER_H
 
-enum State{notInUse, inUse, triggered};
+enum State{notInUse, inUse, triggered, menu};
+enum ManualSprayDelay{low = 30, medium = 60, high = 90};
 
 class Freshener : public BinaryActuator { 
 
@@ -20,10 +21,11 @@ public:
     void spray(int amount);
     void setState(State s);
     void reset();
-    void increaseTimesPulled(int distanceThreshold, int distance);
     // Attributes
+    ManualSprayDelay manualSprayDelay;
     unsigned long timesPulled;
     unsigned long timeInUse;
+    unsigned long spraysLeft;
 };
 
-#endif //INFOB3IT_FRESHENER_H
+#endif //INFOB3IT_FRESHENER_Hc

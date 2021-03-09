@@ -16,3 +16,4 @@ public:
 };
 
 #endif //INFOB3IT_BINARYACTUATOR_H
+

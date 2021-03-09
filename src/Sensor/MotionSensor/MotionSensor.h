@@ -19,7 +19,6 @@ public:
     // Methods
     int motionCounter();
     void reset();
-    // Attributes
 
 };
 

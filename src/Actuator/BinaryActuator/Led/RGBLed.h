@@ -19,7 +19,10 @@ public:
     void magenta(); 
     void yellow(); 
     void white(); 
-    void ambulance();
+    void singleBlue(); 
+    void singleRed(); 
+    void singleGreen(); 
+    void off(); 
 
 }; 
 

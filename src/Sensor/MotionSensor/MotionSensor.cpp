@@ -2,8 +2,6 @@
 #include "MotionSensor.h"
 
 MotionSensor::MotionSensor(int pinNumber) : Sensor(pinNumber) { 
-    this->pinNumber = pinNumber;
-    pinMode(pinNumber, INPUT);
     this->motionCount = 0;
     this->state = LOW;
     this->currentState = 0;

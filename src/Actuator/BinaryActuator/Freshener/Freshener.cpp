@@ -2,11 +2,14 @@
 #include "Freshener.h"
 
 Freshener::Freshener(int pinNumber) : BinaryActuator(pinNumber) {
-    // this->pinNumber = pinNumber;
-    // digitalWrite(pinNumber, OUTPUT);
+    this->manualSprayDelay = low;
     this->timeInUse = 0;
     this->timesPulled = 0;
     this->state = notInUse;
+}
+
+void Freshener::setState(State s) {
+    this->state = s;
 }
 
 State Freshener::getState() {
@@ -17,14 +20,11 @@ void Freshener::spray(int amount) {
     
     for (int i = 0; i < amount; i++) {
         this->on();
-        delay(25000);
+        delay(20000);
         this->off();
+        delay(1000);
     }
     
-}
-
-void Freshener::setState(State s) {
-    this->state = s;
 }
 
 void Freshener::reset() {
@@ -33,8 +33,3 @@ void Freshener::reset() {
     this->state = notInUse;
 }
 
-void Freshener::increaseTimesPulled(int distanceThreshold, int distance) {
-    if (distance > distanceThreshold) {
-        this->timesPulled++;
-    }
-}
