@@ -18,6 +18,7 @@ void BinarySwitch::updateState() {
       this->endPressed = millis();
       this->holdTime = this->endPressed - this->startPressed;
   }
+
 }
 
 /* Records time button is idle/on hold WHILE button is still pressed/released

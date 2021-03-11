@@ -6,7 +6,7 @@
 #define INFOB3IT_FRESHENER_H
 
 enum State{notInUse, inUse, triggered, menu};
-enum ManualSprayDelay{low = 30, medium = 60, high = 90};
+enum ManualSprayDelay{low = 20, medium = 30, high = 40};
 
 class Freshener : public BinaryActuator { 
 

@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <NewPing.h>
+// #include <NewPing.h>
 #include <LiquidCrystal.h>
 #include <OneWire.h>
 #include <EEPROM.h>
@@ -45,8 +45,10 @@ DallasTemperature sensors(&oneWire);
 
 // Classification Properties
 State state;
-const unsigned long timeInUseThreshold = 10;
-const unsigned long timesPulledThreshold = 5;
+const unsigned long timeInUseThresholdLow = 10;
+const unsigned long timeInUseThresholdHigh = 120;
+const unsigned long timesPulledThresholdLow = 5;
+const unsigned long timesPulledThresholdHigh = 20;
 
 
 // Globals
@@ -65,7 +67,6 @@ void setup() {
 }
  
 void loop() {
-  
 
   state = freshener.getState();
 
@@ -73,59 +74,71 @@ void loop() {
 
     rgbled.singleBlue();
 
-    lcd.setCursor(0,0);
+    lcd.setCursor(10,1);
     lcd.print(freshener.manualSprayDelay);
 
+    // BUTTON 1: If button is held longer than 1 second go to not in use, else reset sprays
+    resetSpraysButton.buttonState = resetSpraysButton.getState();
+    if(resetSpraysButton.buttonState != resetSpraysButton.lastButtonState){
+      resetSpraysButton.updateState();
+      if (resetSpraysButton.holdTime>=1000){
+        freshener.setState(inUse);
+      } else {
+        freshener.spraysLeft=2400;
+        EEPROM.put(spraysLeftStartingAddress, freshener.spraysLeft);
 
-    // In the menu state we can fire a manual spray after the set delay
-    // if(manualSprayButton.getState()){
-    //   delay(freshener.manualSprayDelay * 1000);
-    //   freshener.spray(1);
-    // }
+      } 
+      
+    }
 
+    resetSpraysButton.lastButtonState = resetSpraysButton.buttonState;
 
-    // // Switch to not in use if held longer than 2 seconds
-    // if (changeDelayButton.getState() && resetSpraysButton.getState()){
-    //   freshener.setState(notInUse);
-    // }
-    
-    // if (resetSpraysButton.getState()) {
-    //   freshener.spraysLeft=2400;
-    //   EEPROM.put(spraysLeftStartingAddress, freshener.spraysLeft);
-     
-    // if (changeDelayButton.getState()){
-    //       if (millis() > changeDelayButton.lastPressed + 2000){
-    //         if(freshener.manualSprayDelay == low){
-    //           freshener.manualSprayDelay = medium;
-    //         } else if (freshener.manualSprayDelay == medium) {
-    //           freshener.manualSprayDelay = high;
-    //         } else {
-    //           freshener.manualSprayDelay = low;
-    //         }
-    //       changeDelayButton.lastPressed = millis();
-    //       }
-    // }         
+    // BUTTON 2: Changing delay
+    if (changeDelayButton.getState()){
+          if (millis() > changeDelayButton.lastPressed + 2000){
+            if(freshener.manualSprayDelay == low){
+              freshener.manualSprayDelay = medium;
+            } else if (freshener.manualSprayDelay == medium) {
+              freshener.manualSprayDelay = high;
+            } else {
+              freshener.manualSprayDelay = low;
+            }
+          changeDelayButton.lastPressed = millis();
+          }
+    } 
+
+    //Button 3: Manual spray
+    if(manualSprayButton.getState()){
+      if (millis() > changeDelayButton.lastPressed + 2000){
+        freshener.spray(1);
+        freshener.spraysLeft-=1;
+        EEPROM.put(spraysLeftStartingAddress, freshener.spraysLeft);
+      }
+    }    
+
   } else {
 
     // Switch to menu state
-    // if(resetSpraysButton.getState()){
-    //   freshener.setState(menu);
-    // }
+    if(resetSpraysButton.getState() && millis() > changeDelayButton.lastPressed + 2000){
+      lcd.print(F(" "));
+      freshener.setState(menu);
+    }
 
     lcd.setCursor(0,0);
+    lcd.print("Sprays: ");
+    lcd.setCursor(9,0);
     lcd.print(freshener.spraysLeft);
 
-    lcd.setCursor(1,0);
+    lcd.setCursor(0,1);
     sensors.requestTemperatures();
     lcd.print(sensors.getTempCByIndex(0));
+    lcd.setCursor(5,1);
+    lcd.print("C");
 
     // Toilet is not in use
     if (state == notInUse) {
 
       rgbled.yellow();
-      
-      lcd.setCursor(0,0);
-      lcd.print(F("Toilet not in use"));
 
       if (lightSensor.thresholdReached()){
         freshener.setState(inUse);
@@ -138,12 +151,8 @@ void loop() {
       freshener.timesPulled = motionSensor.motionCounter();
       
       stopwatch.start();
-
-      lcd.setCursor(0,0);
-      lcd.print(F("Toilet in use"));
       
-      if (!lightSensor.thresholdReached()) {  // lightIsOff
-          Serial.println("setting state to triggered");
+      if (!lightSensor.thresholdReached()) {
           toiletUseDisplayTimer.start(5000);
           freshener.setState(triggered);
       }
@@ -158,19 +167,19 @@ void loop() {
 
       Serial.println(freshener.timeInUse);
       Serial.println(freshener.timesPulled);
+
     
-      lcd.setCursor(0,0);
-
-
-      if (freshener.timesPulled >= timesPulledThreshold && freshener.timeInUse >= timeInUseThreshold) {  // number 2
+    
+      if (freshener.timesPulled >= timesPulledThresholdLow && freshener.timesPulled <= timesPulledThresholdHigh && freshener.timeInUse >= timeInUseThresholdHigh) {  // Number 2
         rgbled.white();
-      } else if (freshener.timeInUse < timeInUseThreshold) {  // number 1 
+        sprayAmount = 2;
+      } else if (freshener.timesPulled < timesPulledThresholdLow && freshener.timeInUse >= timeInUseThresholdLow) {  // Number 1
         rgbled.singleRed();
-        sprayAmount = 1;   
-      } else if (freshener.timeInUse >= timeInUseThreshold && freshener.timesPulled >= timesPulledThreshold) {  // cleaning
+        sprayAmount = 1;  
+      } else if (freshener.timesPulled > timesPulledThresholdHigh) {  // Cleaning
         rgbled.singleGreen();
         sprayAmount = 0;
-      } else {  // cannot recognise
+      } else {  // Can not recognise
         rgbled.off();
         sprayAmount = 0;
       }
@@ -191,14 +200,12 @@ void loop() {
   }
 
   if(timer.hasExpired()){
-  Serial.println(freshener.timeInUse);
-  Serial.println(freshener.timesPulled);
-  Serial.println(freshener.spraysLeft);
-  Serial.println(lightSensor.getValue());
-  timer.repeat();
+    Serial.println(freshener.timeInUse);
+    Serial.println(freshener.timesPulled);
+    Serial.println(freshener.spraysLeft);
+    Serial.println(lightSensor.getValue());
+    timer.repeat();
     
   }
-
-
   
 }
